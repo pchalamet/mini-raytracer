@@ -19,7 +19,7 @@ func (c1 Color) Sub(c2 Color) Color {
 }
 
 
-func (c1 Color) HadamardProduct(c2 Color) Color {
+func (c1 Color) HadamardProduct(c2 Color) Color {	
 	return Color {c1.Red * c2.Red, c1.Green * c2.Green, c1.Blue * c2.Blue }
 }
 

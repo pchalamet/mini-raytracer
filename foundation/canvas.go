@@ -5,16 +5,15 @@ import "image/png"
 import "image/color"
 import "os"
 
-
 type Canvas struct {
-	Width int
+	Width  int
 	Height int
 	Pixels []Color
 }
 
 func NewCanvas(width, height int) Canvas {
-	pixels := make([]Color, width * height)
-	return Canvas { width, height, pixels }
+	pixels := make([]Color, width*height)
+	return Canvas{width, height, pixels}
 }
 
 func (c *Canvas) Write(x, y int, clr Color) {
@@ -22,7 +21,7 @@ func (c *Canvas) Write(x, y int, clr Color) {
 		panic("Attempt to write outside canvas")
 	}
 
-	c.Pixels[y * c.Width + x] = clr
+	c.Pixels[y*c.Width+x] = clr
 }
 
 func (c *Canvas) Read(x, y int) Color {
@@ -30,7 +29,7 @@ func (c *Canvas) Read(x, y int) Color {
 		panic("Attempt to read outside canvas")
 	}
 
-	return c.Pixels[y * c.Width + x]
+	return c.Pixels[y*c.Width+x]
 }
 
 func clamp(f float64) uint8 {
@@ -50,15 +49,15 @@ func convert(c Color) color.Color {
 	g := clamp(c.Green)
 	b := clamp(c.Blue)
 
-	return color.RGBA {r, g, b, 255 }
+	return color.RGBA{r, g, b, 255}
 }
 
 func (c *Canvas) Save(filename string) error {
 	rgba := image.NewRGBA(image.Rect(0, 0, c.Width, c.Height))
-	for i := 0; i<c.Width; i++ {
-		for j := 0; j<c.Height; j++ {
+	for i := 0; i < c.Width; i++ {
+		for j := 0; j < c.Height; j++ {
 			clr := convert(c.Read(i, j))
-			rgba.Set(i, c.Height - j, clr)
+			rgba.Set(i, c.Height-j, clr)
 		}
 	}
 
